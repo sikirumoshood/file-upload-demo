@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head> <title>File upload AJAX</title></head>
+    <body>
+        <input type="file" multiple id='fileInput'><br>
+        <input type="text" id='lease'>
+
+        <button id='uploadBtn'>Upload files</button>
+
+
+        <!-- SCRIPT -->
+        <script>
+
+             const fileInput = document.getElementById('fileInput');
+             const leaseInput = document.getElementById('lease');
+             const btnUpload = document.getElementById('uploadBtn');
+
+             btnUpload.addEventListener('click', () => {
+                 console.log('Clicked');
+                 const xhr = new XMLHttpRequest();
+                 const formData = new FormData();
+                 console.log(fileInput.files);
+                 for(const file of fileInput.files){
+                     formData.append('lease_files', file);
+                 }
+                 formData.append('lease_id', leaseInput.value);
+                 
+                 // SEND DATA TO API          
+                 xhr.open('post', "http://8d81a40e.ngrok.io/v1/applications/upload-document");
+                 xhr.setRequestHeader('Authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEwMDkiLCJ1c2VyX3JvbGUiOlsiQSJdLCJlbWFpbCI6InRlc3RhZG1pbkBrYWZlbmUuY29tIiwibmFtZSI6IkthZmVuZSBUZXN0IEFkbWluIiwiaWF0IjoxNTg2Nzc2MDQ2LCJleHAiOjE1ODk0MDQwNDYsImF1ZCI6Imh0dHA6Ly93d3cua2FmZW5lLmNvbSIsImlzcyI6IkthZmVuZSIsInN1YiI6IkxvZ2luVG9rZW4ifQ.SMPLTM1f2Pxg63pJispSh6F0fPrnZuoUO4u3m4Tz_Ps');
+                 xhr.send(formData);
+             })
+
+        </script>
+       
+    </body>
+
+</html>
